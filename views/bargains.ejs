@@ -1,0 +1,20 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Welcome to <%=shopData.shopName%></title>
+    <link rel="stylesheet"  type="text/css" href="/main.css" />
+  </head>
+  <body>
+    <h1><%=shopData.shopName%> Shop</h1>
+    <h2>Here are our bargain products:</h2>
+    <div class="scroll-container">
+      <div class="scroll-content">
+        <ul>
+          <% available_products.forEach(function(product) { %>
+            <li><%=product.model%>, <%=product.type_of_device%>, £<%=product.price%> </li>
+      <% }) %>
+    </ul>
+    </div>
+    </div>
+    </body>
+</html>
