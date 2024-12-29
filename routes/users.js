@@ -20,7 +20,7 @@ router.post('/registered', [
     // Checking for errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.redirect('./register');
+        return res.redirect('/register');
     } else {
         // Use firstName wherever necessary
         const saltRounds = 10;
@@ -73,25 +73,35 @@ router.get('/login', (req, res) => {
 router.get('/logout', redirectLogin, (req, res) => {
   req.session.destroy(err => {
       if (err) {
-          return res.redirect('./'); // Redirect if an error occurs
+          return res.redirect('/'); // Redirect if an error occurs
       }
-      res.send('You are now logged out. <a href="./">Home</a>'); // Confirmation message
+      res.send('You are now logged out. <a href="/">Home</a>'); // Confirmation message
   })
 })
 
 router.post('/login', (req, res) => {
+    // Check if this is a register button click
+    if (req.body.register) {
+        return res.redirect('/user/register');
+    }
+
     const sqlquery = "SELECT * FROM Users WHERE username = ?";
     const username = req.sanitize(req.body.username);
     const plainPassword = req.sanitize(req.body.password);
     
+    // If username or password is empty, redirect to register page
+    if (!username || !plainPassword) {
+        return res.redirect('/user/register');
+    }
+    
     db.query(sqlquery, [username], (err, result) => {
         if (err) {
-            res.redirect('./');
+            res.redirect('/');
             return;
         }
         
         if (result.length === 0) {
-            res.redirect('login');
+            res.redirect('/login');
             return;
         }
         
@@ -110,7 +120,7 @@ router.post('/login', (req, res) => {
                     isLoggedIn: true
                 });
             } else {
-                res.redirect('login');
+                res.redirect('/login');
             }
         });
     });
