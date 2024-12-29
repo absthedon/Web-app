@@ -20,7 +20,7 @@ router.post('/registered', [
     // Checking for errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-        return res.redirect('/register');
+        return res.redirect('users/register');
     } else {
         // Use firstName wherever necessary
         const saltRounds = 10;
@@ -44,7 +44,7 @@ router.post('/registered', [
 
 const redirectLogin = (req, res, next) => {
     if (!req.session.userId ) {
-        res.redirect('/login') // redirect to the login page
+        res.redirect('login') // redirect to the login page
     } else { 
         next (); // move to the next middleware function
     } 
@@ -82,7 +82,7 @@ router.get('/logout', redirectLogin, (req, res) => {
 router.post('/login', (req, res) => {
     // Check if this is a register button click
     if (req.body.register) {
-        return res.redirect('/user/register');
+        return res.redirect('/users/register');
     }
 
     const sqlquery = "SELECT * FROM Users WHERE username = ?";
@@ -91,7 +91,7 @@ router.post('/login', (req, res) => {
     
     // If username or password is empty, redirect to register page
     if (!username || !plainPassword) {
-        return res.redirect('/user/register');
+        return res.redirect('users/register');
     }
     
     db.query(sqlquery, [username], (err, result) => {
@@ -101,7 +101,7 @@ router.post('/login', (req, res) => {
         }
         
         if (result.length === 0) {
-            res.redirect('/login');
+            res.redirect('login');
             return;
         }
         
@@ -120,7 +120,7 @@ router.post('/login', (req, res) => {
                     isLoggedIn: true
                 });
             } else {
-                res.redirect('/login');
+                res.redirect('login');
             }
         });
     });
