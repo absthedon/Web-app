@@ -34,8 +34,27 @@ router.get('/find_products', function (req, res, next) {
             return next(err);
         }
         try {
-            const data = JSON.parse(body); // Parse the API response
-            res.json(data);
+            const JsonData = JSON.parse(body); // Parse the API response
+            const products = JsonData.data.map(item => {
+                return {
+                  id: item.Product.id,
+                  brand: item.Product.Brand,
+                  category: item.Product.Category,
+                  model: item.Product.Model,
+                  version: item.Product.Version
+                };
+              });              
+            let html = '<link rel="stylesheet" href="/main.css">\n';
+            html += '<ul class="products-list">';
+            products.forEach(product => {
+                html += `<li>${product.brand} - ${product.category} - ${product.model}</li>`;
+            });
+            html += '</ul>';
+            
+            // Set content type to HTML and send response
+            res.setHeader('Content-Type', 'text/html');
+            res.send(html);
+        
         } catch (parseError) {
             next(parseError); 
         }

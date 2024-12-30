@@ -20,7 +20,18 @@ router.get('/products', function (req, res, next) {
             res.status(500).json({ error: 'Database query failed' });
             return next(err);
         }
-        res.json(result); // Return filtered or all results
+        
+        // Convert results to HTML list
+        let html = '<link rel="stylesheet" href="/main.css">\n';
+        html += '<ul class="products-list">';
+        result.forEach(product => {
+            html += `<li>${product.model} - £${product.price} - ${product.type_of_device}</li>`;
+        });
+        html += '</ul>';
+        
+        // Set content type to HTML and send response
+        res.setHeader('Content-Type', 'text/html');
+        res.send(html);
     });
 });
 
