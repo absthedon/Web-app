@@ -25,3 +25,5 @@ npm install bcrypt
 These commands install the necessary packages needed to run the application.
 
 To use the API provided by the application you can add: api/products to the current page and this will return a list of all the products on the database. If you then add: ?search-term=(type of product that you want) it will return all the products of that same type. 
+
+To use the external API click on the option to search for a type of product on the web and put in the type of product so that it returns a list of different products from the TechSpecs API.
