@@ -17,8 +17,8 @@ router.get('/products', function(req, res, next) {
 });
 
 router.get('/find_products', function (req, res, next) {
-    const apiKey = '5f965c03-ae7f-4dad-9e0e-3517fee2b431';
-    const apiId = '6771f4d7a9199c5c82a8eaba'; 
+    const apiKey = '22843cc1-2f15-4b27-9e23-e8731c15a803';
+    const apiId = '677427b7a9199c5c82a8ebae'; 
     const product = req.query.product;
 
     const options = {
